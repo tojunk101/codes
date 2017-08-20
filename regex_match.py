@@ -3,18 +3,15 @@
 #The matching should cover the entire input string (not partial).
 #
 
-# The logic can be cleaned up a little
 def isMatch(arg, regex):
     if len(regex) <= 0:
         return len(arg) == 0
-    if len(arg) > 0 and arg[0] == regex[0] and (len(regex) <= 1 or (len(regex) > 1 and regex[1] != "*")):
-        return isMatch(arg[1:], regex[1:])
-    if regex[0] == "." and regex[1] and regex[1] != "*":
-        return len(arg) > 0 and isMatch(arg[1:], regex[1:])
-    if regex[0] == "." and regex[1] and regex[1] == "*":
-        return (len(arg) == 0) or (len(arg) > 0 and isMatch(arg[1:], regex)) or (len(regex) > 2 and len(arg) > 1 and isMatch(arg[1:], regex[2:]))
     if len(regex) > 1 and regex[1] == "*":
         return (len(arg) == 0) or (arg[0] != regex[0] and isMatch(arg[1:], regex[2:])) or isMatch(arg[1:], regex)
+    if regex[0] == "." and regex[1] and regex[1] != "*":
+        return len(arg) > 0 and isMatch(arg[1:], regex[1:])
+    if len(arg) > 0 and arg[0] == regex[0]:
+        return isMatch(arg[1:], regex[1:])
 
 
 inp = "aa"
